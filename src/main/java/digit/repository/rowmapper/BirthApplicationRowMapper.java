@@ -16,6 +16,14 @@ import java.util.*;
 @Component
 //rowmapper does?
 public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthRegistrationApplication>> {
+    /**
+     * Extracts data from the result set and maps it to BirthRegistrationApplication objects.
+     *
+     * @param rs ResultSet containing birth application data.
+     * @return List of BirthRegistrationApplication objects.
+     * @throws SQLException if a database access error occurs.
+     * @throws DataAccessException if data access fails.
+     */
     public List<BirthRegistrationApplication> extractData(ResultSet rs) throws SQLException, DataAccessException {
         Map<String,BirthRegistrationApplication> birthRegistrationApplicationMap = new LinkedHashMap<>();
 
@@ -61,12 +69,16 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
         }
         return new ArrayList<>(birthRegistrationApplicationMap.values());
     }
-
+    /**
+     * Adds related entities such as address to the BirthRegistrationApplication object.
+     */
     private void addChildrenToProperty(ResultSet rs, BirthRegistrationApplication birthRegistrationApplication)
             throws SQLException {
         addAddressToApplication(rs, birthRegistrationApplication);
     }
-
+    /**
+     * Maps address details from ResultSet to BirthRegistrationApplication.
+     */
     private void addAddressToApplication(ResultSet rs, BirthRegistrationApplication birthRegistrationApplication) throws SQLException {
         Address address = Address.builder()
                 .tenantId(rs.getString("atenantid"))

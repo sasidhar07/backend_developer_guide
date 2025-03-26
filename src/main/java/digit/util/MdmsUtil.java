@@ -1,6 +1,9 @@
 package digit.util;
 
 import com.jayway.jsonpath.JsonPath;
+
+import digit.config.ServiceConstants;
+
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.mdms.model.MasterDetail;
 import org.egov.mdms.model.MdmsCriteria;
@@ -27,7 +30,13 @@ public class MdmsUtil {
 
     @Value("${egov.mdms.search.endpoint}")
     private String mdmsUrl;
-
+    /**
+     * Fetches registration charges from MDMS.
+     *
+     * @param requestInfo The request information.
+     * @param tenantId The tenant ID.
+     * @return The registration charge amount, or null if an error occurs.
+     */
 
     public Integer fetchRegistrationChargesFromMdms(RequestInfo requestInfo, String tenantId) {
         StringBuilder uri = new StringBuilder();
@@ -37,22 +46,28 @@ public class MdmsUtil {
         Integer rate = 0;
         try {
             response = restTemplate.postForObject(uri.toString(), mdmsCriteriaReq, Map.class);
-            rate = JsonPath.read(response, "$.MdmsRes.BTR.RegistrationCharges.[0].amount");
+            rate = JsonPath.read(response, ServiceConstants.REGISTRATION_CHARGES_JSON_PATH);
         }catch(Exception e) {
             return  null;
         }
         return rate;
     }
-
+    /**
+     * Builds MDMS request criteria for fetching category list.
+     *
+     * @param requestInfo The request information.
+     * @param tenantId The tenant ID.
+     * @return The MDMS request object.
+     */
     private MdmsCriteriaReq getMdmsRequestForCategoryList(RequestInfo requestInfo, String tenantId) {
         MasterDetail masterDetail = new MasterDetail();
-        masterDetail.setName("RegistrationCharges");
+        masterDetail.setName(ServiceConstants.REGISTRATION_CHARGES);
         List<MasterDetail> masterDetailList = new ArrayList<>();
         masterDetailList.add(masterDetail);
 
         ModuleDetail moduleDetail = new ModuleDetail();
         moduleDetail.setMasterDetails(masterDetailList);
-        moduleDetail.setModuleName("BTR");
+        moduleDetail.setModuleName(ServiceConstants.BUSINESS_SERVICE);
         List<ModuleDetail> moduleDetailList = new ArrayList<>();
         moduleDetailList.add(moduleDetail);
 

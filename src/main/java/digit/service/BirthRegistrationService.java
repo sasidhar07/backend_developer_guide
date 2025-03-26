@@ -1,6 +1,7 @@
 package digit.service;
 
 
+import digit.config.ServiceConstants;
 import digit.enrichment.BirthApplicationEnrichment;
 import digit.kafka.Producer;
 import digit.repository.BirthRegistrationRepository;
@@ -60,6 +61,14 @@ public class BirthRegistrationService {
 //        return birthRegistrationRequest.getBirthRegistrationApplications();
 //    }
 
+/**
+ * Registers a new birth application.
+ * Validates, enriches, updates workflow, and pushes data to Kafka.
+ * 
+ * @param birthRegistrationRequest The request containing birth registration details.
+ * @return
+ */
+
 public List<BirthRegistrationApplication> registerBtRequest(BirthRegistrationRequest birthRegistrationRequest) {
     // Validate applications
     validator.validateBirthApplication(birthRegistrationRequest);
@@ -75,7 +84,7 @@ public List<BirthRegistrationApplication> registerBtRequest(BirthRegistrationReq
 
     // Push the application to the topic for persister to listen and persist
     //change bt to birth and fetch it from config
-    producer.push("save-bt-application", birthRegistrationRequest);
+    producer.push(ServiceConstants.KAFKA_SAVE_BIRTH_APPLICATION, birthRegistrationRequest);
 
     // Return the response back to user
     return birthRegistrationRequest.getBirthRegistrationApplications();
@@ -99,7 +108,13 @@ public List<BirthRegistrationApplication> registerBtRequest(BirthRegistrationReq
 //        return applications;
 //    }
 
-
+/**
+ * Searches for birth registration applications based on the given criteria.
+ * 
+ * @param requestInfo The request information.
+ * @param birthApplicationSearchCriteria The search criteria.
+ * @return List of birth registration applications matching the criteria.
+ */
 public List<BirthRegistrationApplication> searchBtApplications(RequestInfo requestInfo, BirthApplicationSearchCriteria birthApplicationSearchCriteria) {
     // Fetch applications from database according to the given search criteria
     List<BirthRegistrationApplication> applications = birthRegistrationRepository.getApplications(birthApplicationSearchCriteria);
@@ -117,7 +132,12 @@ public List<BirthRegistrationApplication> searchBtApplications(RequestInfo reque
     // Otherwise return the found applications
     return applications;
 }
-//
+/**
+ * Updates an existing birth registration application.
+ * 
+ * @param birthRegistrationRequest The request containing updated birth registration details.
+ * @return The updated birth registration application.
+ */
 public BirthRegistrationApplication updateBtApplication(BirthRegistrationRequest birthRegistrationRequest) {
     BirthRegistrationApplication existingApplication = validator.validateApplicationExistence(birthRegistrationRequest.getBirthRegistrationApplications().get(0));
     existingApplication.setWorkflow(birthRegistrationRequest.getBirthRegistrationApplications().get(0).getWorkflow());
@@ -130,7 +150,7 @@ public BirthRegistrationApplication updateBtApplication(BirthRegistrationRequest
     workflowService.updateWorkflowStatus(birthRegistrationRequest);
 
     // Just like create request, update request will be handled asynchronously by the persister
-    producer.push("update-bt-application", birthRegistrationRequest);
+    producer.push(ServiceConstants.KAFKA_UPDATE_BIRTH_APPLICATION, birthRegistrationRequest);
 
     return birthRegistrationRequest.getBirthRegistrationApplications().get(0);
     

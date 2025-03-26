@@ -30,7 +30,18 @@ public class IdgenUtil {
 
     @Autowired
     private Configuration configs;
-
+    
+    /**
+     * Generates a list of unique IDs from the ID generation service.
+     *
+     * @param requestInfo The request information.
+     * @param tenantId The tenant ID for which IDs are generated.
+     * @param idName The name of the ID format.
+     * @param idformat The format pattern of the ID.
+     * @param count The number of IDs to generate.
+     * @return A list of generated IDs.
+     * @throws CustomException If no IDs are returned.
+     */
     public List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String idformat, Integer count) {
         List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {

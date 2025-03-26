@@ -17,6 +17,13 @@ public class BirthApplicationQueryBuilder {
     private static final String FROM_TABLES = " FROM eg_bt_registration btr LEFT JOIN eg_bt_address add ON btr.id = add.registrationid ";
 
     private final String ORDERBY_CREATEDTIME = " ORDER BY btr.createdtime DESC ";
+    /**
+     * Constructs a dynamic SQL query based on the search criteria provided.
+     * 
+     * @param criteria        The search criteria containing filters for tenant ID, status, IDs, and application number.
+     * @param preparedStmtList The list to store values for prepared statements.
+     * @return The final SQL query string with appropriate conditions.
+     */
 
     public String getBirthApplicationSearchQuery(BirthApplicationSearchCriteria criteria, List<Object> preparedStmtList){
         //preparedStmList need?
@@ -50,6 +57,12 @@ public class BirthApplicationQueryBuilder {
 
         return query.toString();
     }
+    /**
+     * Adds a WHERE or AND clause to the query based on the conditions.
+     *
+     * @param query           The SQL query being constructed.
+     * @param preparedStmtList The list of prepared statement values.
+     */
 
     private void addClauseIfRequired(StringBuilder query, List<Object> preparedStmtList){
         if(preparedStmtList.isEmpty()){
@@ -58,7 +71,12 @@ public class BirthApplicationQueryBuilder {
             query.append(" AND ");
         }
     }
-
+    /**
+     * Creates a query placeholder string for multiple IDs in the IN clause.
+     *
+     * @param ids The list of IDs.
+     * @return A comma-separated list of '?' placeholders for prepared statements.
+     */
     private String createQuery(List<String> ids) {
         StringBuilder builder = new StringBuilder();
         int length = ids.size();
@@ -69,7 +87,12 @@ public class BirthApplicationQueryBuilder {
         }
         return builder.toString();
     }
-
+    /**
+     * Adds the list of IDs to the prepared statement parameter list.
+     *
+     * @param preparedStmtList The list to store values for prepared statements.
+     * @param ids The list of IDs to be added.
+     */
     private void addToPreparedStatement(List<Object> preparedStmtList, List<String> ids) {
         ids.forEach(id -> {
             preparedStmtList.add(id);

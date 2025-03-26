@@ -26,7 +26,11 @@ public class NotificationService {
     private RestTemplate restTemplate;
 
     private static final String smsTemplate = "Dear {FATHER_NAME} and {MOTHER_NAME} your birth registration application has been successfully created on the system with application number - {APPNUMBER}.";
-
+    /**
+     * Prepares SMS notification events for birth registration applications and sends them.
+     * 
+     * @param request The birth registration request containing application details.
+     */
     public void prepareEventAndSend(BirthRegistrationRequest request){
         List<SMSRequest> smsRequestList = new ArrayList<>();
         request.getBirthRegistrationApplications().forEach(application -> {
@@ -40,7 +44,13 @@ public class NotificationService {
             log.info("Messages: " + smsRequest.getMessage());
         }
     }
-
+    /**
+     * Generates a custom SMS message by replacing placeholders in the template.
+     * 
+     * @param template The SMS template with placeholders.
+     * @param application The birth registration application to extract details.
+     * @return The formatted SMS message.
+     */
     private String getCustomMessage(String template, BirthRegistrationApplication application) {
         template = template.replace("{APPNUMBER}", application.getApplicationNumber());
         template = template.replace("{FATHER_NAME}", application.getFather().getName());

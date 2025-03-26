@@ -28,8 +28,13 @@ public class ServiceRequestRepository {
         this.mapper = mapper;
         this.restTemplate = restTemplate;
     }
-
-
+    /**
+     * Fetches results from an external service by making a POST request.
+     *
+     * @param uri     The URL to which the request is sent.
+     * @param request The request payload.
+     * @return The response received from the external service.
+     */
     public Object fetchResult(StringBuilder uri, Object request) {
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         Object response = null;

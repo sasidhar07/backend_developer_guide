@@ -59,6 +59,12 @@ public class UserService {
             }
         });
     }
+    /**
+     * Creates a User object for the father based on the birth registration application.
+     *
+     * @param application The birth registration application containing father details.
+     * @return A User object for the father.
+     */
 
     private User createFatherUser(BirthRegistrationApplication application){
         User father = application.getFather();
@@ -73,7 +79,12 @@ public class UserService {
                 .build();
         return user;
     }
-
+    /**
+     * Creates a User object for the mother based on the birth registration application.
+     *
+     * @param application The birth registration application containing mother details.
+     * @return A User object for the mother.
+     */
     private User createMotherUser(BirthRegistrationApplication application){
         User mother = application.getMother();
         User user = User.builder().userName(mother.getUserName())
@@ -87,6 +98,14 @@ public class UserService {
                 .build();
         return user;
     }
+    
+    /**
+     * Searches for an existing user or creates a new user if not found.
+     *
+     * @param user The user details to be upserted.
+     * @param requestInfo Request metadata for the user operation.
+     * @return The upserted User object.
+     */
     private User upsertUser(User user, RequestInfo requestInfo){
 
         String tenantId = user.getTenantId();
@@ -111,7 +130,13 @@ public class UserService {
         return userServiceResponse;
     }
 
-
+    
+    /**
+     * Enriches the birth registration application by validating user accounts.
+     *
+     * @param application The birth registration application to enrich.
+     * @param requestInfo Request metadata for the operation.
+     */
     private void enrichUser(BirthRegistrationApplication application, RequestInfo requestInfo){
         String accountIdFather = application.getFather().getUuid();
         String  accountIdMother = application.getMother().getUuid();
@@ -136,7 +161,7 @@ public class UserService {
      * @param requestInfo
      * @param tenantId
      * @param userInfo
-     * @return
+     * @return The newly created User object.
      */
     private User createUser(RequestInfo requestInfo,String tenantId, User userInfo) {
 

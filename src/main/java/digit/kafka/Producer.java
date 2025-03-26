@@ -13,7 +13,12 @@ public class Producer {
 
     @Autowired
     private CustomKafkaTemplate<String, Object> kafkaTemplate;
-
+    /**
+     * Pushes a message to the specified Kafka topic.
+     *
+     * @param topic The name of the Kafka topic.
+     * @param value The message payload to be sent.
+     */
     public void push(String topic, Object value) {
         kafkaTemplate.send(topic, value);
     }

@@ -23,12 +23,18 @@ import java.util.TimeZone;
 public class BTRConfiguration {
     @Value("${app.timezone}")
     private String timeZone;
-
+    /**
+     * Sets the default timezone for the application during initialization.
+     */
     @PostConstruct
     public void initialize() {
         TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
     }
-
+    /**
+     * Configures JSON message converter with custom object mapper.
+     * @param objectMapper ObjectMapper instance.
+     * @return MappingJackson2HttpMessageConverter instance.
+     */
     @Bean
     @Autowired
     public MappingJackson2HttpMessageConverter jacksonConverter(ObjectMapper objectMapper) {

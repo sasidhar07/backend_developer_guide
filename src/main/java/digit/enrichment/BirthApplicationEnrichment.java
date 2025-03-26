@@ -26,7 +26,11 @@ public class BirthApplicationEnrichment {
 
     @Autowired
     private UserUtil userUtils;
-
+    /**
+     * Enriches the birth registration request by adding application numbers, UUIDs, and audit details.
+     *
+     * @param birthRegistrationRequest The request containing birth registration applications to be enriched.
+     */
     public void enrichBirthApplication(BirthRegistrationRequest birthRegistrationRequest) {
         List<String> birthRegistrationIdList = idgenUtil.getIdList(birthRegistrationRequest.getRequestInfo(), birthRegistrationRequest.getBirthRegistrationApplications().get(0).getTenantId(), "btr.registrationid", "", birthRegistrationRequest.getBirthRegistrationApplications().size());
         Integer index = 0;
@@ -48,7 +52,11 @@ public class BirthApplicationEnrichment {
 
         }
     }
-
+    /**
+     * Updates the audit details upon modifying a birth registration request.
+     *
+     * @param birthRegistrationRequest The request containing birth registration applications that are being updated.
+     */
     public void enrichBirthApplicationUponUpdate(BirthRegistrationRequest birthRegistrationRequest) {
         // Enrich lastModifiedTime and lastModifiedBy in case of update
         birthRegistrationRequest.getBirthRegistrationApplications().get(0).getAuditDetails().setLastModifiedTime(System.currentTimeMillis());
@@ -84,7 +92,11 @@ public class BirthApplicationEnrichment {
 //                .uuid(motherUser.getUuid()).build();
 //        application.setMother(motherApplicant);
 //    }
-
+    /**
+     * Retrieves and enriches father details based on the UUID provided in the application.
+     *
+     * @param application The birth registration application whose father's details need to be enriched.
+     */
     public void enrichFatherApplicantOnSearch(BirthRegistrationApplication application) {
         UserDetailResponse fatherUserResponse = userService.searchUser(userUtils.getStateLevelTenant(application.getTenantId()),application.getFather().getUuid(),null);
         User fatherUser = fatherUserResponse.getUser().get(0);
@@ -99,7 +111,11 @@ public class BirthApplicationEnrichment {
                 .uuid(fatherUser.getUuid()).build();
         application.setFather(fatherApplicant);
     }
-
+    /**
+     * Retrieves and enriches mother details based on the UUID provided in the application.
+     *
+     * @param application The birth registration application whose mother's details need to be enriched.
+     */
     public void enrichMotherApplicantOnSearch(BirthRegistrationApplication application) {
         UserDetailResponse motherUserResponse = userService.searchUser(userUtils.getStateLevelTenant(application.getTenantId()),application.getMother().getUuid(),null);
         User motherUser = motherUserResponse.getUser().get(0);

@@ -26,12 +26,17 @@ public class BirthRegistrationRepository {
 
     @Autowired
     private BirthApplicationRowMapper rowMapper;
-
+    /**
+     * Fetches birth registration applications based on the provided search criteria.
+     *
+     * @param searchCriteria Criteria for searching birth applications.
+     * @return List of matching birth registration applications.
+     */
     public List<BirthRegistrationApplication>getApplications(BirthApplicationSearchCriteria searchCriteria){
         List<Object> preparedStmtList = new ArrayList<>();
         String query = queryBuilder.getBirthApplicationSearchQuery(searchCriteria, preparedStmtList);
         //log . debug
-        log.info("Final query: " + query);
+        log.debug("Final query: {}", query);
         return jdbcTemplate.query(query, preparedStmtList.toArray(), rowMapper);
     }
 }

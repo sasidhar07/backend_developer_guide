@@ -29,6 +29,12 @@ public class BirthRegistrationRequest   {
     @JsonProperty("BirthRegistrationApplications")
     @Valid
     private List<BirthRegistrationApplication> birthRegistrationApplications = null;
+    /**
+     * Adds a new birth registration application to the list.
+     *
+     * @param birthRegistrationApplicationsItem The birth registration application to add.
+     * @return The updated BirthRegistrationRequest object.
+     */
     public BirthRegistrationRequest addBirthRegistrationApplicationsItem(BirthRegistrationApplication birthRegistrationApplicationsItem) {
         if (this.birthRegistrationApplications == null) {
             this.birthRegistrationApplications = new ArrayList<>();

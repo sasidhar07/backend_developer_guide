@@ -24,6 +24,7 @@ import lombok.Builder;
 @NoArgsConstructor
 @Builder
 public class BirthApplicationSearchCriteria   {
+        
         @JsonProperty("tenantId")
         @NotNull
         private String tenantId = null;
@@ -35,6 +36,12 @@ public class BirthApplicationSearchCriteria   {
         @JsonProperty("applicationNumber")
         @Size(min=2,max=64)         
         private String applicationNumber = null;
+        /**
+        * Adds a new application ID to the list of IDs.
+        *
+        * @param idsItem The application ID to add.
+        * @return The updated BirthApplicationSearchCriteria object.
+        */
         public BirthApplicationSearchCriteria addIdsItem(String idsItem) {
             if (this.ids == null) {
             this.ids = new ArrayList<>();

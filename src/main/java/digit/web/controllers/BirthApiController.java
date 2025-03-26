@@ -1,6 +1,7 @@
 package digit.web.controllers;
 
 
+import digit.config.ServiceConstants;
 import digit.service.BirthRegistrationService;
 import digit.util.ResponseInfoFactory;
 import digit.web.models.*;
@@ -38,6 +39,13 @@ import jakarta.servlet.http.HttpServletRequest;
 
     @Autowired
     private ResponseInfoFactory responseInfoFactory;
+    /**
+     * Constructor to initialize dependencies.
+     *
+     * @param objectMapper
+     * @param request
+     * @param birthRegistrationService
+     */
 
     @Autowired
     public BirthApiController(ObjectMapper objectMapper, HttpServletRequest request, BirthRegistrationService birthRegistrationService) {
@@ -46,26 +54,43 @@ import jakarta.servlet.http.HttpServletRequest;
         this.birthRegistrationService = birthRegistrationService;
     }
 
-    @RequestMapping(value="/registration/v1/_create", method = RequestMethod.POST)
-    public ResponseEntity<BirthRegistrationResponse> v1RegistrationCreatePost(@ApiParam(value = "Details for the new Birth Registration Application(s) + RequestInfo meta data." ,required=true )  @Valid @RequestBody BirthRegistrationRequest birthRegistrationRequest) {
-        System.out.println("rriejn");
+    /**
+     * Handles the birth registration creation request.
+     *
+     * @param birthRegistrationRequest The request body containing birth registration details.
+     * @return ResponseEntity containing the created birth registration applications and response info.
+     */
 
+    @RequestMapping(value="/registration/v1/_create", method = RequestMethod.POST)
+    public ResponseEntity<BirthRegistrationResponse> v1RegistrationCreatePost(@ApiParam(value = ServiceConstants.BIRTH_REGISTRATION_DETAILS, required = true)  @Valid @RequestBody BirthRegistrationRequest birthRegistrationRequest) {
         List<BirthRegistrationApplication> applications = birthRegistrationService.registerBtRequest(birthRegistrationRequest);
         ResponseInfo responseInfo = responseInfoFactory.createResponseInfoFromRequestInfo(birthRegistrationRequest.getRequestInfo(), true);
         BirthRegistrationResponse response = BirthRegistrationResponse.builder().birthRegistrationApplications(applications).responseInfo(responseInfo).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+     /**
+     * Handles the birth registration search request.
+     *
+     * @param birthApplicationSearchRequest The request body containing search criteria.
+     * @return ResponseEntity containing the list of matching birth registration applications.
+     */
+
     @RequestMapping(value="/v1/registration/_search", method = RequestMethod.POST)
-    public ResponseEntity<BirthRegistrationResponse> v1RegistrationSearchPost(@ApiParam(value = "Details for the new Birth Registration Application(s) + RequestInfo meta data." ,required=true )  @Valid @RequestBody BirthApplicationSearchRequest birthApplicationSearchRequest) {
+    public ResponseEntity<BirthRegistrationResponse> v1RegistrationSearchPost(@ApiParam(value = ServiceConstants.BIRTH_REGISTRATION_DETAILS, required = true)  @Valid @RequestBody BirthApplicationSearchRequest birthApplicationSearchRequest) {
         List<BirthRegistrationApplication> applications = birthRegistrationService.searchBtApplications(birthApplicationSearchRequest.getRequestInfo(), birthApplicationSearchRequest.getBirthApplicationSearchCriteria());
         ResponseInfo responseInfo = responseInfoFactory.createResponseInfoFromRequestInfo(birthApplicationSearchRequest.getRequestInfo(), true);
         BirthRegistrationResponse response = BirthRegistrationResponse.builder().birthRegistrationApplications(applications).responseInfo(responseInfo).build();
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-
+    /**
+     * Handles the birth registration update request.
+     *
+     * @param birthRegistrationRequest The request body containing updated birth registration details.
+     * @return ResponseEntity containing the updated birth registration application and response info.
+     */
     @RequestMapping(value="/registration/v1/_update", method = RequestMethod.POST)
-    public ResponseEntity<BirthRegistrationResponse> v1RegistrationUpdatePost(@ApiParam(value = "Details for the new (s) + RequestInfo meta data." ,required=true )  @Valid @RequestBody BirthRegistrationRequest birthRegistrationRequest) {
+    public ResponseEntity<BirthRegistrationResponse> v1RegistrationUpdatePost(@ApiParam(value = ServiceConstants.BIRTH_REGISTRATION_DETAILS, required = true)  @Valid @RequestBody BirthRegistrationRequest birthRegistrationRequest) {
         BirthRegistrationApplication application = birthRegistrationService.updateBtApplication(birthRegistrationRequest);
 
         ResponseInfo responseInfo = responseInfoFactory.createResponseInfoFromRequestInfo(birthRegistrationRequest.getRequestInfo(), true);
@@ -74,4 +99,4 @@ import jakarta.servlet.http.HttpServletRequest;
     }
 
 
-        }
+}

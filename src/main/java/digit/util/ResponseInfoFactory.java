@@ -8,7 +8,13 @@ import static digit.config.ServiceConstants.*;
 
 @Component
 public class ResponseInfoFactory {
-
+    /**
+     * Creates a ResponseInfo object based on the given RequestInfo.
+     *
+     * @param requestInfo The request information.
+     * @param success Indicates whether the operation was successful.
+     * @return The ResponseInfo object.
+     */
     public ResponseInfo createResponseInfoFromRequestInfo(final RequestInfo requestInfo, final Boolean success) {
 
         final String apiId = requestInfo != null ? requestInfo.getApiId() : "";
