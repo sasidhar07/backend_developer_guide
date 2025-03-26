@@ -8,6 +8,7 @@ import static digit.config.ServiceConstants.*;
 
 @Component
 public class ResponseInfoFactory {
+    
     /**
      * Creates a ResponseInfo object based on the given RequestInfo.
      *

@@ -13,6 +13,7 @@ public class Producer {
 
     @Autowired
     private CustomKafkaTemplate<String, Object> kafkaTemplate;
+    
     /**
      * Pushes a message to the specified Kafka topic.
      *

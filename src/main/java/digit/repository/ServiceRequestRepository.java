@@ -28,6 +28,7 @@ public class ServiceRequestRepository {
         this.mapper = mapper;
         this.restTemplate = restTemplate;
     }
+    
     /**
      * Fetches results from an external service by making a POST request.
      *

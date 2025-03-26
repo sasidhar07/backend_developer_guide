@@ -26,6 +26,7 @@ public class BirthRegistrationRepository {
 
     @Autowired
     private BirthApplicationRowMapper rowMapper;
+    
     /**
      * Fetches birth registration applications based on the provided search criteria.
      *

@@ -26,6 +26,7 @@ public class BirthApplicationEnrichment {
 
     @Autowired
     private UserUtil userUtils;
+    
     /**
      * Enriches the birth registration request by adding application numbers, UUIDs, and audit details.
      *
@@ -52,6 +53,7 @@ public class BirthApplicationEnrichment {
 
         }
     }
+
     /**
      * Updates the audit details upon modifying a birth registration request.
      *
@@ -92,6 +94,7 @@ public class BirthApplicationEnrichment {
 //                .uuid(motherUser.getUuid()).build();
 //        application.setMother(motherApplicant);
 //    }
+
     /**
      * Retrieves and enriches father details based on the UUID provided in the application.
      *
@@ -111,6 +114,7 @@ public class BirthApplicationEnrichment {
                 .uuid(fatherUser.getUuid()).build();
         application.setFather(fatherApplicant);
     }
+    
     /**
      * Retrieves and enriches mother details based on the UUID provided in the application.
      *

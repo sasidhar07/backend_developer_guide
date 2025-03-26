@@ -17,6 +17,7 @@ public class BirthApplicationQueryBuilder {
     private static final String FROM_TABLES = " FROM eg_bt_registration btr LEFT JOIN eg_bt_address add ON btr.id = add.registrationid ";
 
     private final String ORDERBY_CREATEDTIME = " ORDER BY btr.createdtime DESC ";
+    
     /**
      * Constructs a dynamic SQL query based on the search criteria provided.
      * 
@@ -57,6 +58,7 @@ public class BirthApplicationQueryBuilder {
 
         return query.toString();
     }
+
     /**
      * Adds a WHERE or AND clause to the query based on the conditions.
      *
@@ -71,6 +73,7 @@ public class BirthApplicationQueryBuilder {
             query.append(" AND ");
         }
     }
+
     /**
      * Creates a query placeholder string for multiple IDs in the IN clause.
      *
@@ -87,6 +90,7 @@ public class BirthApplicationQueryBuilder {
         }
         return builder.toString();
     }
+
     /**
      * Adds the list of IDs to the prepared statement parameter list.
      *

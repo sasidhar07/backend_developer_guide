@@ -28,6 +28,7 @@ public class BirthRegistrationResponse {
     @JsonProperty("BirthRegistrationApplications")
     @Valid
     private List<@Valid BirthRegistrationApplication> birthRegistrationApplications = new ArrayList<>();
+    
     /**
      * Adds a birth registration application to the list.
      *

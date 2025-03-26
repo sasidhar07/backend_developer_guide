@@ -28,14 +28,18 @@ public class BirthApplicationSearchCriteria   {
         @JsonProperty("tenantId")
         @NotNull
         private String tenantId = null;
+
         @JsonProperty("status")
         private String status = null;
+
         @JsonProperty("ids")
         @Size(max=50)         
         private List<String> ids = null;
+
         @JsonProperty("applicationNumber")
         @Size(min=2,max=64)         
         private String applicationNumber = null;
+        
         /**
         * Adds a new application ID to the list of IDs.
         *

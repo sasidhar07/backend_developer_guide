@@ -25,6 +25,7 @@ public class NotificationConsumer {
     private NotificationService notificationService;
 
     @KafkaListener(topics = {"${btr.kafka.create.topic}"})
+    
     /**
      * Listens to messages from the configured Kafka topic and processes them.
      *

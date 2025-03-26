@@ -22,6 +22,7 @@ public class BirthApplicationSearchRequest {
     @JsonProperty("RequestInfo")
     @Valid
     private RequestInfo requestInfo = null;
+    
     @JsonProperty("BirthApplicationSearchCriteria")
     @Valid
     private BirthApplicationSearchCriteria birthApplicationSearchCriteria = null;

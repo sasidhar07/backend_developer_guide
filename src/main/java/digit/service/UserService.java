@@ -59,13 +59,13 @@ public class UserService {
             }
         });
     }
+
     /**
      * Creates a User object for the father based on the birth registration application.
      *
      * @param application The birth registration application containing father details.
      * @return A User object for the father.
      */
-
     private User createFatherUser(BirthRegistrationApplication application){
         User father = application.getFather();
         User user = User.builder().userName(father.getUserName())
@@ -79,6 +79,7 @@ public class UserService {
                 .build();
         return user;
     }
+    
     /**
      * Creates a User object for the mother based on the birth registration application.
      *

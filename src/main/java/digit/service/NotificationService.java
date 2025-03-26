@@ -26,6 +26,7 @@ public class NotificationService {
     private RestTemplate restTemplate;
 
     private static final String smsTemplate = "Dear {FATHER_NAME} and {MOTHER_NAME} your birth registration application has been successfully created on the system with application number - {APPNUMBER}.";
+    
     /**
      * Prepares SMS notification events for birth registration applications and sends them.
      * 
@@ -44,6 +45,7 @@ public class NotificationService {
             log.info("Messages: " + smsRequest.getMessage());
         }
     }
+
     /**
      * Generates a custom SMS message by replacing placeholders in the template.
      * 

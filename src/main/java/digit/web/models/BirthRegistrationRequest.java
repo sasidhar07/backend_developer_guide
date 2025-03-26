@@ -23,12 +23,15 @@ import org.egov.common.contract.request.RequestInfo;
 @NoArgsConstructor
 @Builder
 public class BirthRegistrationRequest   {
+
     @JsonProperty("RequestInfo")
     @Valid
     private RequestInfo requestInfo = null;
+
     @JsonProperty("BirthRegistrationApplications")
     @Valid
     private List<BirthRegistrationApplication> birthRegistrationApplications = null;
+    
     /**
      * Adds a new birth registration application to the list.
      *

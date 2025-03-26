@@ -18,6 +18,7 @@ public class MainConfiguration {
 
     @Value("${app.timezone}")
     private String timeZone;
+
     /**
      * Initializes the application with the specified time zone.
      * This method runs after the bean's construction.
@@ -28,15 +29,16 @@ public class MainConfiguration {
         TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
     }
 
-    @Bean
-     /**
+    /**
      * Configures and provides an ObjectMapper bean.
      *
      * @return an ObjectMapper with customized settings
      */
+    @Bean
     public ObjectMapper objectMapper(){
     return new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES).setTimeZone(TimeZone.getTimeZone(timeZone));
     }
+    
     /**
      * Configures and provides a MappingJackson2HttpMessageConverter bean.
      *

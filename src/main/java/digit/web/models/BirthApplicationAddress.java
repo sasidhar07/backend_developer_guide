@@ -25,12 +25,14 @@ import lombok.Builder;
 @NoArgsConstructor
 @Builder
 public class BirthApplicationAddress   {
+    
     /**
      * Unique identifier for the birth application address.
      */
     @JsonProperty("id")
     @Valid
     private String id = null;
+
     /**
      * Tenant ID for identifying the jurisdiction (mandatory field).
      */
@@ -38,11 +40,13 @@ public class BirthApplicationAddress   {
     @NotNull
     @Size(min=2,max=64)         
     private String tenantId = null;
+
     /**
      * Application number associated with the birth registration.
      */
     @JsonProperty("applicationNumber")
     private String applicationNumber = null;
+
     /**
      * Address details of the applicant.
      */

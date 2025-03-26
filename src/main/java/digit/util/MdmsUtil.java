@@ -30,6 +30,7 @@ public class MdmsUtil {
 
     @Value("${egov.mdms.search.endpoint}")
     private String mdmsUrl;
+    
     /**
      * Fetches registration charges from MDMS.
      *
@@ -37,7 +38,6 @@ public class MdmsUtil {
      * @param tenantId The tenant ID.
      * @return The registration charge amount, or null if an error occurs.
      */
-
     public Integer fetchRegistrationChargesFromMdms(RequestInfo requestInfo, String tenantId) {
         StringBuilder uri = new StringBuilder();
         uri.append(mdmsHost).append(mdmsUrl);
@@ -52,6 +52,7 @@ public class MdmsUtil {
         }
         return rate;
     }
+
     /**
      * Builds MDMS request criteria for fetching category list.
      *

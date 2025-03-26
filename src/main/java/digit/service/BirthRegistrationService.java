@@ -108,52 +108,53 @@ public List<BirthRegistrationApplication> registerBtRequest(BirthRegistrationReq
 //        return applications;
 //    }
 
-/**
- * Searches for birth registration applications based on the given criteria.
- * 
- * @param requestInfo The request information.
- * @param birthApplicationSearchCriteria The search criteria.
- * @return List of birth registration applications matching the criteria.
- */
-public List<BirthRegistrationApplication> searchBtApplications(RequestInfo requestInfo, BirthApplicationSearchCriteria birthApplicationSearchCriteria) {
-    // Fetch applications from database according to the given search criteria
-    List<BirthRegistrationApplication> applications = birthRegistrationRepository.getApplications(birthApplicationSearchCriteria);
+    /**
+     * Searches for birth registration applications based on the given criteria.
+     * 
+     * @param requestInfo The request information.
+     * @param birthApplicationSearchCriteria The search criteria.
+     * @return List of birth registration applications matching the criteria.
+     */
+    public List<BirthRegistrationApplication> searchBtApplications(RequestInfo requestInfo, BirthApplicationSearchCriteria birthApplicationSearchCriteria) {
+        // Fetch applications from database according to the given search criteria
+        List<BirthRegistrationApplication> applications = birthRegistrationRepository.getApplications(birthApplicationSearchCriteria);
 
-    // If no applications are found matching the given criteria, return an empty list
-    if(CollectionUtils.isEmpty(applications))
-        return new ArrayList<>();
+        // If no applications are found matching the given criteria, return an empty list
+        if(CollectionUtils.isEmpty(applications))
+            return new ArrayList<>();
 
-    // Enrich mother and father of applicant objects
-    applications.forEach(application -> {
-        enrichmentUtil.enrichFatherApplicantOnSearch(application);
-        enrichmentUtil.enrichMotherApplicantOnSearch(application);
-    });
+        // Enrich mother and father of applicant objects
+        applications.forEach(application -> {
+            enrichmentUtil.enrichFatherApplicantOnSearch(application);
+            enrichmentUtil.enrichMotherApplicantOnSearch(application);
+        });
 
-    // Otherwise return the found applications
-    return applications;
-}
-/**
- * Updates an existing birth registration application.
- * 
- * @param birthRegistrationRequest The request containing updated birth registration details.
- * @return The updated birth registration application.
- */
-public BirthRegistrationApplication updateBtApplication(BirthRegistrationRequest birthRegistrationRequest) {
-    BirthRegistrationApplication existingApplication = validator.validateApplicationExistence(birthRegistrationRequest.getBirthRegistrationApplications().get(0));
-    existingApplication.setWorkflow(birthRegistrationRequest.getBirthRegistrationApplications().get(0).getWorkflow());
-    log.info(existingApplication.toString());
-    birthRegistrationRequest.setBirthRegistrationApplications(Collections.singletonList(existingApplication));
-
-    // Enrich application upon update
-    enrichmentUtil.enrichBirthApplicationUponUpdate(birthRegistrationRequest);
-
-    workflowService.updateWorkflowStatus(birthRegistrationRequest);
-
-    // Just like create request, update request will be handled asynchronously by the persister
-    producer.push(ServiceConstants.KAFKA_UPDATE_BIRTH_APPLICATION, birthRegistrationRequest);
-
-    return birthRegistrationRequest.getBirthRegistrationApplications().get(0);
+        // Otherwise return the found applications
+        return applications;
+    }
     
-    
-}
+    /**
+     * Updates an existing birth registration application.
+     * 
+     * @param birthRegistrationRequest The request containing updated birth registration details.
+     * @return The updated birth registration application.
+     */
+    public BirthRegistrationApplication updateBtApplication(BirthRegistrationRequest birthRegistrationRequest) {
+        BirthRegistrationApplication existingApplication = validator.validateApplicationExistence(birthRegistrationRequest.getBirthRegistrationApplications().get(0));
+        existingApplication.setWorkflow(birthRegistrationRequest.getBirthRegistrationApplications().get(0).getWorkflow());
+        log.info(existingApplication.toString());
+        birthRegistrationRequest.setBirthRegistrationApplications(Collections.singletonList(existingApplication));
+
+        // Enrich application upon update
+        enrichmentUtil.enrichBirthApplicationUponUpdate(birthRegistrationRequest);
+
+        workflowService.updateWorkflowStatus(birthRegistrationRequest);
+
+        // Just like create request, update request will be handled asynchronously by the persister
+        producer.push(ServiceConstants.KAFKA_UPDATE_BIRTH_APPLICATION, birthRegistrationRequest);
+
+        return birthRegistrationRequest.getBirthRegistrationApplications().get(0);
+        
+        
+    }
 }

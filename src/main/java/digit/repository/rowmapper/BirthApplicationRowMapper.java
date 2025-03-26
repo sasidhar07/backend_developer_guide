@@ -16,6 +16,7 @@ import java.util.*;
 @Component
 //rowmapper does?
 public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthRegistrationApplication>> {
+    
     /**
      * Extracts data from the result set and maps it to BirthRegistrationApplication objects.
      *
@@ -69,6 +70,7 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
         }
         return new ArrayList<>(birthRegistrationApplicationMap.values());
     }
+
     /**
      * Adds related entities such as address to the BirthRegistrationApplication object.
      */
@@ -76,6 +78,7 @@ public class BirthApplicationRowMapper implements ResultSetExtractor<List<BirthR
             throws SQLException {
         addAddressToApplication(rs, birthRegistrationApplication);
     }
+
     /**
      * Maps address details from ResultSet to BirthRegistrationApplication.
      */

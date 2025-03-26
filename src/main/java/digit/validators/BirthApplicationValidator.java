@@ -15,6 +15,7 @@ public class BirthApplicationValidator {
 
     @Autowired
     private BirthRegistrationRepository repository;
+    
     /**
      * Validates the birth registration request to ensure mandatory fields are present.
      *
@@ -27,6 +28,7 @@ public class BirthApplicationValidator {
                 throw new CustomException(ServiceConstants.BIRTH_APP_ERROR_CODE, ServiceConstants.TENANT_ID_MANDATORY);
         });
     }
+    
     /**
      * Validates the existence of a birth registration application by searching for it in the repository.
      *

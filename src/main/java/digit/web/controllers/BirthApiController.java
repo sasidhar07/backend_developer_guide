@@ -39,6 +39,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
     @Autowired
     private ResponseInfoFactory responseInfoFactory;
+
     /**
      * Constructor to initialize dependencies.
      *
@@ -46,7 +47,6 @@ import jakarta.servlet.http.HttpServletRequest;
      * @param request
      * @param birthRegistrationService
      */
-
     @Autowired
     public BirthApiController(ObjectMapper objectMapper, HttpServletRequest request, BirthRegistrationService birthRegistrationService) {
         this.objectMapper = objectMapper;
@@ -60,7 +60,6 @@ import jakarta.servlet.http.HttpServletRequest;
      * @param birthRegistrationRequest The request body containing birth registration details.
      * @return ResponseEntity containing the created birth registration applications and response info.
      */
-
     @RequestMapping(value="/registration/v1/_create", method = RequestMethod.POST)
     public ResponseEntity<BirthRegistrationResponse> v1RegistrationCreatePost(@ApiParam(value = ServiceConstants.BIRTH_REGISTRATION_DETAILS, required = true)  @Valid @RequestBody BirthRegistrationRequest birthRegistrationRequest) {
         List<BirthRegistrationApplication> applications = birthRegistrationService.registerBtRequest(birthRegistrationRequest);
@@ -75,7 +74,6 @@ import jakarta.servlet.http.HttpServletRequest;
      * @param birthApplicationSearchRequest The request body containing search criteria.
      * @return ResponseEntity containing the list of matching birth registration applications.
      */
-
     @RequestMapping(value="/v1/registration/_search", method = RequestMethod.POST)
     public ResponseEntity<BirthRegistrationResponse> v1RegistrationSearchPost(@ApiParam(value = ServiceConstants.BIRTH_REGISTRATION_DETAILS, required = true)  @Valid @RequestBody BirthApplicationSearchRequest birthApplicationSearchRequest) {
         List<BirthRegistrationApplication> applications = birthRegistrationService.searchBtApplications(birthApplicationSearchRequest.getRequestInfo(), birthApplicationSearchRequest.getBirthApplicationSearchCriteria());
@@ -83,6 +81,7 @@ import jakarta.servlet.http.HttpServletRequest;
         BirthRegistrationResponse response = BirthRegistrationResponse.builder().birthRegistrationApplications(applications).responseInfo(responseInfo).build();
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+    
     /**
      * Handles the birth registration update request.
      *

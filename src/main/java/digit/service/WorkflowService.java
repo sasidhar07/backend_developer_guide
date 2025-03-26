@@ -33,6 +33,7 @@ public class WorkflowService {
 
     @Autowired
     private BTRConfiguration config;
+    
     /**
      * Updates the workflow status for each birth registration application.
      * @param birthRegistrationRequest The request containing birth registration applications.
@@ -44,7 +45,9 @@ public class WorkflowService {
             callWorkFlow(workflowRequest);
         });
     }
-//set tsate into birth registration status
+
+    //set tsate into birth registration status
+
     /**
      * Calls the workflow transition API and returns the updated state.
      * @param workflowReq The workflow request containing process instance details.
@@ -58,6 +61,7 @@ public class WorkflowService {
         response = mapper.convertValue(optional, ProcessInstanceResponse.class);
         return response.getProcessInstances().get(0).getState();
     }
+
     /**
      * Creates a ProcessInstance for a birth registration application.
      * @param application The birth registration application.
@@ -91,6 +95,7 @@ public class WorkflowService {
         return processInstance;
 
     }
+
      /**
      * Retrieves the current workflow process instance based on business ID.
      * @param requestInfo The request information.
@@ -118,6 +123,7 @@ public class WorkflowService {
 
         return null;
     }
+
     /**
      * Fetches the business service details for a given birth registration application.
      * @param application The birth registration application.
@@ -141,6 +147,7 @@ public class WorkflowService {
 
         return response.getBusinessServices().get(0);
     }
+
     /**
      * Constructs a URL for searching workflow instances.
      * @param tenantId The tenant ID.
@@ -157,6 +164,7 @@ public class WorkflowService {
         url.append(businessService);
         return url;
     }
+
     /**
      * Creates a process instance request for payment processing in birth registration.
      * @param updateRequest The birth registration request.
